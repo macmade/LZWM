@@ -6,11 +6,88 @@
 	objectVersion = 46;
 	objects = {
 
+/* Begin PBXFileReference section */
+		051203EB12E1A6C900F07A22 /* makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = makefile; sourceTree = "<group>"; };
+		051203ED12E1A6C900F07A22 /* C++.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "C++.mk"; sourceTree = "<group>"; };
+		051203EE12E1A6C900F07A22 /* C.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = C.mk; sourceTree = "<group>"; };
+		051203EF12E1A6C900F07A22 /* Objective-C.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Objective-C.mk"; sourceTree = "<group>"; };
+		051203F012E1A6C900F07A22 /* makefile-config.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "makefile-config.mk"; sourceTree = "<group>"; };
+		051203F212E1A6C900F07A22 /* en.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = en.mk; sourceTree = "<group>"; };
+		051203F312E1A6C900F07A22 /* fr.mk */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = fr.mk; sourceTree = "<group>"; };
+		051203F812E1A6C900F07A22 /* libdebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libdebug.h; sourceTree = "<group>"; };
+		051203F912E1A6C900F07A22 /* libio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libio.h; sourceTree = "<group>"; };
+		051203FA12E1A6C900F07A22 /* libprogressbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = libprogressbar.h; sourceTree = "<group>"; };
+		051203FB12E1A6C900F07A22 /* libdebug.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libdebug.c; sourceTree = "<group>"; };
+		051203FC12E1A6C900F07A22 /* libio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libio.c; sourceTree = "<group>"; };
+		051203FD12E1A6C900F07A22 /* libprogressbar.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = libprogressbar.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
 /* Begin PBXGroup section */
 		051203D812E1A44D00F07A22 = {
 			isa = PBXGroup;
 			children = (
+				051203EB12E1A6C900F07A22 /* makefile */,
+				051203EC12E1A6C900F07A22 /* makefile-code */,
+				051203F012E1A6C900F07A22 /* makefile-config.mk */,
+				051203F112E1A6C900F07A22 /* makefile-lang */,
+				051203F412E1A6C900F07A22 /* source */,
 			);
+			sourceTree = "<group>";
+		};
+		051203EC12E1A6C900F07A22 /* makefile-code */ = {
+			isa = PBXGroup;
+			children = (
+				051203ED12E1A6C900F07A22 /* C++.mk */,
+				051203EE12E1A6C900F07A22 /* C.mk */,
+				051203EF12E1A6C900F07A22 /* Objective-C.mk */,
+			);
+			path = "makefile-code";
+			sourceTree = "<group>";
+		};
+		051203F112E1A6C900F07A22 /* makefile-lang */ = {
+			isa = PBXGroup;
+			children = (
+				051203F212E1A6C900F07A22 /* en.mk */,
+				051203F312E1A6C900F07A22 /* fr.mk */,
+			);
+			path = "makefile-lang";
+			sourceTree = "<group>";
+		};
+		051203F412E1A6C900F07A22 /* source */ = {
+			isa = PBXGroup;
+			children = (
+				051203F512E1A6C900F07A22 /* include */,
+				051203F612E1A6C900F07A22 /* lib */,
+			);
+			path = source;
+			sourceTree = "<group>";
+		};
+		051203F512E1A6C900F07A22 /* include */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		051203F612E1A6C900F07A22 /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				051203F712E1A6C900F07A22 /* include */,
+				051203FB12E1A6C900F07A22 /* libdebug.c */,
+				051203FC12E1A6C900F07A22 /* libio.c */,
+				051203FD12E1A6C900F07A22 /* libprogressbar.c */,
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		051203F712E1A6C900F07A22 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				051203F812E1A6C900F07A22 /* libdebug.h */,
+				051203F912E1A6C900F07A22 /* libio.h */,
+				051203FA12E1A6C900F07A22 /* libprogressbar.h */,
+			);
+			path = include;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -131,6 +208,7 @@
 				051203E412E1A44D00F07A22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
