@@ -34,5 +34,21 @@
  * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
  * @abstract    ...
  */
- 
- 
+
+#include "lzwm.h"
+
+/*!
+ * 
+ */
+lzwm_dict * lzwm_create_dict( void )
+{
+    return NULL;
+}
+
+/*!
+ * 
+ */
+void lzwm_delete_dict( lzwm_dict * dict )
+{
+    ( void )dict;
+}

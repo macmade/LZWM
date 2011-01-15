@@ -43,7 +43,17 @@
 extern "C" {
 #endif
     
+    #include "types.h"
     
+    /*!
+     * 
+     */
+    lzwm_dict * lzwm_create_dict( void );
+    
+    /*!
+     * 
+     */
+    void lzwm_delete_dict( lzwm_dict * dict );
     
 #ifdef __cplusplus
 }

@@ -47,10 +47,14 @@ extern "C" {
 #include "stdc/c99.h"
 #include "stdc/posix.h"
 #include "stdc/std-extras/math.h"
+
 #include "constants.h"
 #include "macros.h"
 #include "types.h"
+
+
 #include "args.h"
+#include "dict.h"
 #include "help.h"
     
 #include "libdebug.h"
