@@ -69,7 +69,7 @@ EXEC                = lzwm
 # Dependancies for the executables (objects)
 #-------------------------------------------------------------------------------
 
-DEPS_lzwm           = args help
+DEPS_lzwm           = args dict help
 
 #-------------------------------------------------------------------------------
 # Dependancies for the executables (libraries)
