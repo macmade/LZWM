@@ -27,7 +27,7 @@
 		0512040412E1A94B00F07A22 /* args.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
 		0512040512E1A94B00F07A22 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		0512040612E1A94B00F07A22 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
-		0512040712E1A94B00F07A22 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
+		0512040712E1A94B00F07A22 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; path = types.h; sourceTree = "<group>"; };
 		0512040812E1A95F00F07A22 /* args.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = args.c; sourceTree = "<group>"; };
 		0512040B12E1AA9900F07A22 /* __machine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = __machine.h; sourceTree = "<group>"; };
 		0512040D12E1AA9900F07A22 /* __arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = __arm.h; sourceTree = "<group>"; };
@@ -46,6 +46,8 @@
 		0512041C12E1AA9900F07A22 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
 		0512041D12E1AA9900F07A22 /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		0512041E12E1AA9900F07A22 /* std-extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "std-extras.h"; sourceTree = "<group>"; };
+		0512042612E1AFEC00F07A22 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; path = dict.c; sourceTree = "<group>"; };
+		0512042712E1B08C00F07A22 /* dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dict.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -83,6 +85,7 @@
 			isa = PBXGroup;
 			children = (
 				0512040812E1A95F00F07A22 /* args.c */,
+				0512042612E1AFEC00F07A22 /* dict.c */,
 				0512040112E1A80900F07A22 /* help.c */,
 				0512040012E1A73D00F07A22 /* lzwm.c */,
 				051203F512E1A6C900F07A22 /* include */,
@@ -98,6 +101,7 @@
 				0512041012E1AA9900F07A22 /* stdc */,
 				0512040412E1A94B00F07A22 /* args.h */,
 				0512040512E1A94B00F07A22 /* constants.h */,
+				0512042712E1B08C00F07A22 /* dict.h */,
 				0512040312E1A82300F07A22 /* help.h */,
 				051203FF12E1A73700F07A22 /* lzwm.h */,
 				0512040612E1A94B00F07A22 /* macros.h */,
