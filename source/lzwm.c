@@ -46,6 +46,7 @@ int main( int argc, char * argv[] )
     FILE        * f1;
     FILE        * f2;
     lzwm_cli_args args;
+    lzwm_status   status;
     char          destination[ FILENAME_MAX ];
     
     lzwm_get_cli_args( argc, argv, &args );
@@ -129,12 +130,28 @@ int main( int argc, char * argv[] )
     if( args.compress == true )
     {
         DEBUG( "Compressing file" );
-        lzwm_compress( f1, f2 );
+        
+        status = lzwm_compress( f1, f2 );
+        
+        if( status != LZWM_OK )
+        {
+            printf( "Error: %s.\n", lzwm_err_str( status ) );
+            
+            return EXIT_FAILURE;
+        }
     }
     else if( args.expand == true )
     {
         DEBUG( "Expanding file" );
-        lzwm_expand( f1, f2 );
+        
+        status = lzwm_expand( f1, f2 );
+        
+        if( status != LZWM_OK )
+        {
+            printf( "Error: %s.\n", lzwm_err_str( status ) );
+            
+            return EXIT_FAILURE;
+        }
     }
     else
     {
