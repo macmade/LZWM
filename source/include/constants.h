@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -43,8 +43,16 @@
 extern "C" {
 #endif
 
-#define LZWM_VERSION            "0.0.0"
-#define LZWM_DATA_MAX_LENGTH    2048
+#define LZWM_VERSION                "0.0.0"
+#define LZWM_FILE_ID                "LZWM"
+#define LZWM_FILE_EXT               ".lzwm"
+#define LZWM_DATA_MAX_LENGTH        1024
+#define LZWM_DICT_ALLOC             0xFFFC
+#define LZWM_DICT_MARKER_END        0xFFFF
+#define LZWM_DICT_MARKER_8BITS      0xFFFE
+#define LZWM_DICT_MARKER_16BITS     0xFFFD
+#define LZWM_READ_BUFFER_LENGTH     4096
+#define LZWM_WRITE_BUFFER_LENGTH    4096
 
 #ifdef __cplusplus
 }

@@ -27,7 +27,7 @@
 		0512040412E1A94B00F07A22 /* args.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = args.h; sourceTree = "<group>"; };
 		0512040512E1A94B00F07A22 /* constants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = constants.h; sourceTree = "<group>"; };
 		0512040612E1A94B00F07A22 /* macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = macros.h; sourceTree = "<group>"; };
-		0512040712E1A94B00F07A22 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; path = types.h; sourceTree = "<group>"; };
+		0512040712E1A94B00F07A22 /* types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = types.h; sourceTree = "<group>"; };
 		0512040812E1A95F00F07A22 /* args.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = args.c; sourceTree = "<group>"; };
 		0512040B12E1AA9900F07A22 /* __machine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = __machine.h; sourceTree = "<group>"; };
 		0512040D12E1AA9900F07A22 /* __arm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = __arm.h; sourceTree = "<group>"; };
@@ -46,8 +46,19 @@
 		0512041C12E1AA9900F07A22 /* math.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = math.h; sourceTree = "<group>"; };
 		0512041D12E1AA9900F07A22 /* string.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string.h; sourceTree = "<group>"; };
 		0512041E12E1AA9900F07A22 /* std-extras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "std-extras.h"; sourceTree = "<group>"; };
-		0512042612E1AFEC00F07A22 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; path = dict.c; sourceTree = "<group>"; };
+		0512042612E1AFEC00F07A22 /* dict.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = dict.c; sourceTree = "<group>"; };
 		0512042712E1B08C00F07A22 /* dict.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dict.h; sourceTree = "<group>"; };
+		0512042E12E1BBB700F07A22 /* compress.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = compress.c; sourceTree = "<group>"; };
+		0512043012E1BBBF00F07A22 /* expand.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = expand.c; sourceTree = "<group>"; };
+		0512043112E1BBC800F07A22 /* compress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compress.h; sourceTree = "<group>"; };
+		0512043212E1BBD100F07A22 /* expand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = expand.h; sourceTree = "<group>"; };
+		0512043412E1BF2700F07A22 /* test-1.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "test-1.txt"; sourceTree = "<group>"; };
+		0512043512E1BF2700F07A22 /* test.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = test.sh; sourceTree = "<group>"; };
+		0512043912E1F5AD00F07A22 /* simple.ai */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = simple.ai; sourceTree = "<group>"; };
+		0512043A12E1F5AD00F07A22 /* test-2.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "test-2.txt"; sourceTree = "<group>"; };
+		0512043C12E1FE2000F07A22 /* test-3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "test-3.txt"; sourceTree = "<group>"; };
+		0530163B12E22EF000D578CA /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = file.c; sourceTree = "<group>"; };
+		0530163C12E22F0300D578CA /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -59,6 +70,8 @@
 				051203F012E1A6C900F07A22 /* makefile-config.mk */,
 				051203F112E1A6C900F07A22 /* makefile-lang */,
 				051203F412E1A6C900F07A22 /* source */,
+				0512043312E1BF2700F07A22 /* test-files */,
+				0512043512E1BF2700F07A22 /* test.sh */,
 			);
 			sourceTree = "<group>";
 		};
@@ -85,7 +98,10 @@
 			isa = PBXGroup;
 			children = (
 				0512040812E1A95F00F07A22 /* args.c */,
+				0512042E12E1BBB700F07A22 /* compress.c */,
 				0512042612E1AFEC00F07A22 /* dict.c */,
+				0512043012E1BBBF00F07A22 /* expand.c */,
+				0530163B12E22EF000D578CA /* file.c */,
 				0512040112E1A80900F07A22 /* help.c */,
 				0512040012E1A73D00F07A22 /* lzwm.c */,
 				051203F512E1A6C900F07A22 /* include */,
@@ -100,8 +116,11 @@
 				0512040912E1AA9900F07A22 /* eos-skl */,
 				0512041012E1AA9900F07A22 /* stdc */,
 				0512040412E1A94B00F07A22 /* args.h */,
+				0512043112E1BBC800F07A22 /* compress.h */,
 				0512040512E1A94B00F07A22 /* constants.h */,
 				0512042712E1B08C00F07A22 /* dict.h */,
+				0512043212E1BBD100F07A22 /* expand.h */,
+				0530163C12E22F0300D578CA /* file.h */,
 				0512040312E1A82300F07A22 /* help.h */,
 				051203FF12E1A73700F07A22 /* lzwm.h */,
 				0512040612E1A94B00F07A22 /* macros.h */,
@@ -184,6 +203,17 @@
 				0512041D12E1AA9900F07A22 /* string.h */,
 			);
 			path = "std-extras";
+			sourceTree = "<group>";
+		};
+		0512043312E1BF2700F07A22 /* test-files */ = {
+			isa = PBXGroup;
+			children = (
+				0512043912E1F5AD00F07A22 /* simple.ai */,
+				0512043412E1BF2700F07A22 /* test-1.txt */,
+				0512043A12E1F5AD00F07A22 /* test-2.txt */,
+				0512043C12E1FE2000F07A22 /* test-3.txt */,
+			);
+			path = "test-files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -48,7 +48,7 @@
 # 
 # ------------------------------------------------------------------------------
 
-# $Id: en.mk 2 2010-06-27 10:25:10Z macmade@eosgarden.com $
+# $Id$
 
 # Flag to let the makefile knows that the language labels were included
 LANG_HASLABELS           := 1

@@ -43,7 +43,7 @@
 # 
 #-------------------------------------------------------------------------------
 
-# $Id: C++.mk 2 2010-06-27 10:25:10Z macmade@eosgarden.com $
+# $Id$
 
 # Flag to let the makefile knows that the code specific options were included
 CODE_HASOPTIONS        := 1

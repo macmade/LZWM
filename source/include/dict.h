@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -54,6 +54,16 @@ extern "C" {
      * 
      */
     void lzwm_delete_dict( lzwm_dict * dict );
+    
+    /*!
+     * 
+     */
+    lzwm_code * lzwm_add_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length );
+    
+    /*!
+    * 
+    */
+    lzwm_code * lzwm_find_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length );
     
 #ifdef __cplusplus
 }

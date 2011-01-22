@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -42,7 +42,103 @@
  */
 lzwm_dict * lzwm_create_dict( void )
 {
-    return NULL;
+    unsigned int i;
+    lzwm_dict  * dict;
+    
+    if( NULL == ( dict = ( lzwm_dict * )malloc( sizeof( lzwm_dict ) ) ) )
+    {
+        return NULL;
+    }
+    
+    if( NULL == ( dict->codes = ( lzwm_code * )calloc( sizeof( lzwm_code ), LZWM_DICT_ALLOC ) ) )
+    {
+        free( dict );
+        
+        return NULL;
+    }
+    
+    dict->count  = 256;
+    dict->length = LZWM_DICT_ALLOC;
+    
+    for( i = 0; i < 256; i++ )
+    {
+        dict->codes[ i ].code      = i;
+        dict->codes[ i ].data[ 0 ] = i;
+        dict->codes[ i ].length    = 1;
+    }
+    
+    return dict;
+}
+
+/*!
+ * 
+ */
+lzwm_code * lzwm_add_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length )
+{
+    lzwm_code   * code;
+    lzwm_code   * new_code;
+    unsigned long i;
+    
+    code     = &( dict->codes[ data[ 0 ] ] );
+    new_code = NULL;
+    
+    if( length == 1 )
+    {
+        return code;
+    }
+    
+    if( dict->count == LZWM_DICT_ALLOC )
+    {
+        return NULL;
+    }
+    
+    for( i = 1; i < length; i++ )
+    {
+        if( code->children[ data[ i ] ] == NULL )
+        {
+            new_code                    = &( dict->codes[ dict->count ] );
+            new_code->length            = i + 1;
+            new_code->code              = dict->count;
+            code->children[ data[ i ] ] = new_code;
+            
+            memcpy( new_code->data, data, i + 1 );
+            
+            dict->count++;
+            
+            code = new_code;
+        }
+        else
+        {
+            code = code->children[ data[ i ] ];
+        }
+    }
+    
+    return code;
+}
+
+/*!
+ * 
+ */
+lzwm_code * lzwm_find_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length )
+{
+    unsigned int  i;
+    lzwm_code *   code;
+    
+    code = &( dict->codes[ data[ 0 ] ] );
+    
+    for( i = 1; i < length; i++ )
+    {
+        if( code->children[ data[ i ] ] != NULL )
+        {
+            code = code->children[ data[ i ] ];
+        }
+        else
+        {
+            return NULL;
+        }
+    }
+    
+    return code;
 }
 
 /*!
@@ -50,5 +146,6 @@ lzwm_dict * lzwm_create_dict( void )
  */
 void lzwm_delete_dict( lzwm_dict * dict )
 {
-    ( void )dict;
+    free( dict->codes );
+    free( dict );
 }

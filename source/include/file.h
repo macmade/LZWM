@@ -26,47 +26,33 @@
  * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
-
+ 
 /* $Id$ */
 
 /*!
- * @file        help.c
+ * @header      file.h
  * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
  * @abstract    ...
  */
 
-#include "lzwm.h"
+#ifndef _LZWM_FILE_H
+#define _LZWM_FILE_H
+#pragma once
 
-/*!
- * 
- */
-void lzwm_help( char * exec )
-{
-    printf
-    (
-        "\n"
-        "LZW compression utility - %s\n"
-        "Copyright (c) 2011 eosgarden - Jean-David Gadina <macmade@eosgarden.com>\n"
-        "\n"
-        "Usage: %s [OPTIONS] SOURCE DESTINATION\n"
-        "\n"
-        "Options:\n"
-        "\n"
-        "    -c    Compress SOURCE\n"
-        "    -x    Expand SOURCE\n"
-        "    -v    Prints this version number\n"
-        "    -h    Prints this help message\n"
-        "    -d    Enables debugging mode\n"
-        "\n",
-        LZWM_VERSION,
-        exec
-     );
-}
+#ifdef __cplusplus
+extern "C" {
+#endif
+    
+    #include "stdc/bool.h"
+    
+    /*!
+     * 
+     */
+    bool lzwm_get_destination_filename( char * source, char * filename, bool compress );
 
-/*!
- * 
- */
-void lzwm_print_version( char * name )
-{
-    printf( "%s version: %s\n", name, LZWM_VERSION );
+    
+#ifdef __cplusplus
 }
+#endif
+
+#endif /* _LZWM_FILE_H */

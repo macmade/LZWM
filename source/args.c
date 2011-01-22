@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -50,6 +50,7 @@ void lzwm_get_cli_args( int argc, char ** argv, lzwm_cli_args * args )
         {
             case 'c': args->compress = true; break;
             case 'x': args->expand   = true; break;
+            case 'v': args->version  = true; break;
             case 'h': args->help     = true; break;
             case 'd': args->debug    = true; break;
         }
@@ -58,10 +59,5 @@ void lzwm_get_cli_args( int argc, char ** argv, lzwm_cli_args * args )
     if( i++ < argc )
     {
         args->source = *( argv );
-    }
-    
-    if( i++ < argc )
-    {
-        args->destination = *( ++argv );
     }
 }

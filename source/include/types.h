@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -52,10 +52,10 @@ extern "C" {
     {
         bool   compress;
         bool   expand;
+        bool   version;
         bool   help;
         bool   debug;
         char * source;
-        char * destination;
     }
     lzwm_cli_args;
     
@@ -70,9 +70,9 @@ extern "C" {
     
     typedef struct _lzwm_dict
     {
-        lzwm_code  * codes;
-        unsigned int count;
-        unsigned int length;
+        lzwm_code * codes;
+        size_t      count;
+        size_t      length;
     }
     lzwm_dict;
     

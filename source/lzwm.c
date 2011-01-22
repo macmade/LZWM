@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2010, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -46,13 +46,26 @@ int main( int argc, char * argv[] )
     FILE        * f1;
     FILE        * f2;
     lzwm_cli_args args;
+    char          destination[ FILENAME_MAX ];
     
     lzwm_get_cli_args( argc, argv, &args );
     
-    f1          = NULL;
-    f2          = NULL;
+    f1 = NULL;
+    f2 = NULL;
     
-    if( args.source == NULL || args.destination == NULL || ( args.compress == true && args.expand == true ) || ( args.compress == false && args.expand == false ) )
+    if( args.version == true )
+    {
+        lzwm_print_version( argv[ 0 ] );
+        
+        return EXIT_SUCCESS;
+    }
+    else if
+    (
+             args.help     == true
+        ||   args.source   == NULL
+        || ( args.compress == true && args.expand == true )
+        || ( args.compress == false && args.expand == false )
+    )
     {
         lzwm_help( argv[ 0 ] );
         
@@ -65,7 +78,24 @@ int main( int argc, char * argv[] )
         DEBUG( "Debug mode is now enabled" );
     }
     
-    DEBUG( "Checking access to the source and destination file" );
+    DEBUG
+    (
+        "Command line arguments:\n"
+        "          - Compress:    %s\n"
+        "          - Expand:      %s\n"
+        "          - Version:     %s\n"
+        "          - Help:        %s\n"
+        "          - Debug:       %s\n"
+        "          - Source:      %s",
+        ( args.compress == true ) ? "yes"       : "no",
+        ( args.expand   == true ) ? "yes"       : "no",
+        ( args.version  == true ) ? "yes"       : "no",
+        ( args.help     == true ) ? "yes"       : "no",
+        ( args.debug    == true ) ? "yes"       : "no",
+        ( args.source   != NULL ) ? args.source : "N/A"
+    );
+    
+    DEBUG( "Checking access to the source file" );
     
     if( access( args.source, R_OK ) != 0 )
     {
@@ -74,12 +104,12 @@ int main( int argc, char * argv[] )
         return EXIT_FAILURE;
     }
     
-    if( access( args.destination, F_OK ) == 0 && access( args.destination, W_OK ) != 0 )
+    if( lzwm_get_destination_filename( args.source, destination, ( args.compress == true ) ? true : false ) == false )
     {
-        printf( "Error: unable to destination file for writing: %s\n", args.destination );
-        
-        return EXIT_FAILURE;
+        ERROR( "Cannot determine a destination filename" );
     }
+    
+    DEBUG( "Destination file name: %s", destination );
     
     DEBUG( "Opening the file handles" );
     
@@ -89,9 +119,9 @@ int main( int argc, char * argv[] )
         
         return EXIT_FAILURE;
     }
-    else if( NULL == ( f2 = fopen( args.destination, "wb" ) ) )
+    else if( NULL == ( f2 = fopen( destination, "wb" ) ) )
     {
-        printf( "Error: unable to open destination file: %s\n", args.destination );
+        printf( "Error: unable to open destination file: %s\n", destination );
         
         return EXIT_FAILURE;
     }
@@ -99,12 +129,12 @@ int main( int argc, char * argv[] )
     if( args.compress == true )
     {
         DEBUG( "Compressing file" );
-        /* lzwm_compress( f1, f2 ); */
+        lzwm_compress( f1, f2 );
     }
     else if( args.expand == true )
     {
         DEBUG( "Expanding file" );
-        /* lzwm_expand( f1, f2 ); */
+        lzwm_expand( f1, f2 );
     }
     else
     {

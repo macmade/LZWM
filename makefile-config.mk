@@ -43,7 +43,7 @@
 # 
 #-------------------------------------------------------------------------------
 
-# $Id: makefile-config.mk 2 2010-06-27 10:25:10Z macmade@eosgarden.com $
+# $Id$
 
 #-------------------------------------------------------------------------------
 # Project programming language
@@ -69,7 +69,7 @@ EXEC                = lzwm
 # Dependancies for the executables (objects)
 #-------------------------------------------------------------------------------
 
-DEPS_lzwm           = args dict help
+DEPS_lzwm           = args compress dict expand file help
 
 #-------------------------------------------------------------------------------
 # Dependancies for the executables (libraries)
