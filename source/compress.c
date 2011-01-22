@@ -40,20 +40,24 @@
 /*!
  * 
  */
-void lzwm_compress( FILE * source, FILE * destination )
+lzwm_status lzwm_compress( FILE * source, FILE * destination )
 {
     ( void )source;
     ( void )destination;
+    
+    return LZWM_OK;
 }
   
 /*!
  * 
  */
-void lzwm_compress_write( lzwm_dict * dict, uint16_t * buffer, size_t length, size_t bytes, FILE * destination )
+lzwm_status lzwm_compress_write( lzwm_dict * dict, uint16_t * buffer, size_t length, size_t bytes, FILE * destination )
 {
     ( void )dict;
     ( void )buffer;
     ( void )length;
     ( void )bytes;
     ( void )destination;
+    
+    return LZWM_OK;
 }

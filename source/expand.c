@@ -40,19 +40,23 @@
 /*!
  * 
  */
-void lzwm_expand( FILE * source, FILE * destination )
+lzwm_status lzwm_expand( FILE * source, FILE * destination )
 {
     ( void )source;
     ( void )destination;
+    
+    return LZWM_OK;
 }
 
 /*!
  * 
  */
-void lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destination )
+lzwm_status lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destination )
 {
     ( void )buffer;
     ( void )length;
     ( void )destination;
+    
+    return LZWM_OK;
 }
     

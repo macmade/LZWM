@@ -46,12 +46,12 @@ extern "C" {
     /*!
      * 
      */
-    void lzwm_compress( FILE * source, FILE * destination );
+    lzwm_status lzwm_compress( FILE * source, FILE * destination );
     
     /*!
      * 
      */
-    void lzwm_compress_write( lzwm_dict * dict, uint16_t * buffer, size_t length, size_t bytes, FILE * destination );
+    lzwm_status lzwm_compress_write( lzwm_dict * dict, uint16_t * buffer, size_t length, size_t bytes, FILE * destination );
     
 #ifdef __cplusplus
 }

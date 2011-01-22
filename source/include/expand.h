@@ -46,12 +46,12 @@ extern "C" {
     /*!
      * 
      */
-    void lzwm_expand( FILE * source, FILE * destination );
+    lzwm_status lzwm_expand( FILE * source, FILE * destination );
     
     /*!
      * 
      */
-    void lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destination );
+    lzwm_status lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destination );
     
 #ifdef __cplusplus
 }

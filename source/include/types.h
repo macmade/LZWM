@@ -48,6 +48,12 @@ extern "C" {
     
     #include "constants.h"
     
+    typedef enum
+    {
+        LZWM_OK = 0x00
+    }
+    lzwm_status;
+    
     typedef struct _lzwm_cli_args
     {
         bool   compress;
