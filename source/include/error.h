@@ -30,65 +30,28 @@
 /* $Id$ */
 
 /*!
- * @header      types.h
+ * @header      error.h
  * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
- * @abstract    Program's type definitions
+ * @abstract    ...
  */
 
-#ifndef _LZWM_TYPES_H_
-#define _LZWM_TYPES_H_
+#ifndef _LZWM_ERROR_H
+#define _LZWM_ERROR_H
 #pragma once
 
 #ifdef __cplusplus
 extern "C" {
 #endif
     
-    #include <stdc/bool.h>
-    #include <stdint.h>
+    #include "types.h"
     
-    #include "constants.h"
-    
-    typedef enum
-    {
-        LZWM_OK                 = 0x00,
-        LZWM_ERROR_INVALID_FILE = 0x01,
-        LZWM_ERROR_MALLOC       = 0x02,
-        LZWM_ERROR_FOPEN        = 0x03,
-        LZWM_ERROR_FILE_ID      = 0x04
-    }
-    lzwm_status;
-    
-    typedef struct _lzwm_cli_args
-    {
-        bool   compress;
-        bool   expand;
-        bool   version;
-        bool   help;
-        bool   debug;
-        char * source;
-    }
-    lzwm_cli_args;
-    
-    typedef struct _lzwm_code
-    {
-        uint16_t            code;
-        unsigned char       data[ LZWM_DATA_MAX_LENGTH ];
-        unsigned int        length;
-        struct _lzwm_code * children[ 256 ];
-    }
-    lzwm_code;
-    
-    typedef struct _lzwm_dict
-    {
-        lzwm_code * codes;
-        size_t      count;
-        size_t      length;
-    }
-    lzwm_dict;
+    /*!
+     * 
+     */
+    char * lzwm_err_str( lzwm_status status );
     
 #ifdef __cplusplus
 }
 #endif
 
-#endif /* _LZWM_TYPES_H_ */
-
+#endif /* _LZWM_ERROR_H */

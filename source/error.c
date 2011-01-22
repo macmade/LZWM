@@ -30,65 +30,25 @@
 /* $Id$ */
 
 /*!
- * @header      types.h
+ * @header      error.c
  * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
- * @abstract    Program's type definitions
+ * @abstract    ...
  */
 
-#ifndef _LZWM_TYPES_H_
-#define _LZWM_TYPES_H_
-#pragma once
+#include "lzwm.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-    
-    #include <stdc/bool.h>
-    #include <stdint.h>
-    
-    #include "constants.h"
-    
-    typedef enum
+/*!
+ * 
+ */
+char * lzwm_err_str( lzwm_status status )
+{
+    switch( status )
     {
-        LZWM_OK                 = 0x00,
-        LZWM_ERROR_INVALID_FILE = 0x01,
-        LZWM_ERROR_MALLOC       = 0x02,
-        LZWM_ERROR_FOPEN        = 0x03,
-        LZWM_ERROR_FILE_ID      = 0x04
+        case LZWM_OK:                   return "no error";
+        case LZWM_ERROR_INVALID_FILE:   return "Invalid file type - only regular files can be compressed using LZWM";
+        case LZWM_ERROR_MALLOC:         return "malloc() error";
+        case LZWM_ERROR_FOPEN:          return "unable to open file";
+        case LZWM_ERROR_FILE_ID:        return "invalid file ID";
+        default:                        return "unknown error";
     }
-    lzwm_status;
-    
-    typedef struct _lzwm_cli_args
-    {
-        bool   compress;
-        bool   expand;
-        bool   version;
-        bool   help;
-        bool   debug;
-        char * source;
-    }
-    lzwm_cli_args;
-    
-    typedef struct _lzwm_code
-    {
-        uint16_t            code;
-        unsigned char       data[ LZWM_DATA_MAX_LENGTH ];
-        unsigned int        length;
-        struct _lzwm_code * children[ 256 ];
-    }
-    lzwm_code;
-    
-    typedef struct _lzwm_dict
-    {
-        lzwm_code * codes;
-        size_t      count;
-        size_t      length;
-    }
-    lzwm_dict;
-    
-#ifdef __cplusplus
 }
-#endif
-
-#endif /* _LZWM_TYPES_H_ */
-

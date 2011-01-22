@@ -59,6 +59,7 @@ extern "C" {
 #include "args.h"
 #include "compress.h"
 #include "dict.h"
+#include "error.h"
 #include "expand.h"
 #include "file.h"
 #include "help.h"

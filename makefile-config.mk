@@ -69,7 +69,7 @@ EXEC                = lzwm
 # Dependancies for the executables (objects)
 #-------------------------------------------------------------------------------
 
-DEPS_lzwm           = args compress dict expand file help
+DEPS_lzwm           = args compress dict error expand file help
 
 #-------------------------------------------------------------------------------
 # Dependancies for the executables (libraries)
