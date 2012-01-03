@@ -97,6 +97,8 @@
 		051203F412E1A6C900F07A22 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				051203F612E1A6C900F07A22 /* lib */,
+				051203F512E1A6C900F07A22 /* include */,
 				0512040812E1A95F00F07A22 /* args.c */,
 				0512042E12E1BBB700F07A22 /* compress.c */,
 				0512042612E1AFEC00F07A22 /* dict.c */,
@@ -104,8 +106,6 @@
 				0530163B12E22EF000D578CA /* file.c */,
 				0512040112E1A80900F07A22 /* help.c */,
 				0512040012E1A73D00F07A22 /* lzwm.c */,
-				051203F512E1A6C900F07A22 /* include */,
-				051203F612E1A6C900F07A22 /* lib */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -238,6 +238,7 @@
 		051203DA12E1A44D00F07A22 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastUpgradeCheck = 0420;
 				ORGANIZATIONNAME = eosgarden;
 			};
 			buildConfigurationList = 051203DD12E1A44D00F07A22 /* Build configuration list for PBXProject "lzwm" */;

@@ -27,7 +27,7 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
  
-/* $Id$ */
+/* $Id: compress.c 18 2011-01-22 19:21:25Z macmade@eosgarden.com $ */
 
 /*!
  * @header      compress.c
@@ -42,8 +42,160 @@
  */
 lzwm_status lzwm_compress( FILE * source, FILE * destination )
 {
-    ( void )source;
-    ( void )destination;
+    unsigned int        i;
+    unsigned int        j;
+    unsigned int        n;
+    unsigned int        p;
+    unsigned long       read_ops;
+    unsigned long       read_op;
+    size_t              size;
+    size_t              length;
+    size_t              bytes;
+    uint8_t             c;
+    uint8_t             s[ LZWM_DATA_MAX_LENGTH ];
+    uint8_t             read_buffer[ LZWM_READ_BUFFER_LENGTH ];
+    uint16_t            write_buffer[ LZWM_WRITE_BUFFER_LENGTH ];
+    lzwm_dict         * dict;
+    lzwm_code         * code;
+    lzwm_code         * prev_code;
+    libprogressbar_args args;
+    
+    c         = 0;
+    i         = 0;
+    j         = 0;
+    n         = 1;
+    p         = 0;
+    read_op   = 0;
+    length    = 0;
+    bytes     = 0;
+    dict      = NULL;
+    code      = NULL;
+    prev_code = NULL;
+    size      = fsize( source );
+    read_ops  = ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
+    
+    memset( s,           0, LZWM_DATA_MAX_LENGTH );
+    memset( read_buffer, 0, LZWM_READ_BUFFER_LENGTH );
+    
+    if( fread( &s, sizeof( uint8_t ), 1, source ) == 0 )
+    {
+        return LZWM_ERROR_INVALID_FILE;
+    }
+    
+    DEBUG( "Initializing the LZWM dictionary" );
+    
+    if( NULL == ( dict = lzwm_create_dict() ) )
+    {
+        return LZWM_ERROR_MALLOC;
+    }
+    
+    if( libdebug_is_enabled() == false )
+    {
+        args.percent = &p;
+        args.length  = 50;
+        args.label   = "Compressing file:";
+        args.done    = "[OK]";
+        
+        libprogressbar_create_progressbar( ( void * )( &args ) );
+    }
+    
+    DEBUG( "First character: 0x%02X - %03u (%c)", s[ 0 ], s[ 0 ], ( isprint( s[ 0 ] ) ) ? s[ 0 ] : '.' );
+    
+    prev_code = &( dict->codes[ s[ 0 ] ] );
+    
+    while( ( length = fread( read_buffer, sizeof( uint8_t ), LZWM_READ_BUFFER_LENGTH, source ) ) )
+    {
+        DEBUG( "Reading data from source file" );
+        
+        read_op++;
+        
+        for( i = 0; i < length; i++ )
+        {
+            c      = read_buffer[ i ];
+            s[ n ] = c;
+            
+            bytes++;
+            
+            if( NULL == ( code = lzwm_find_dict_entry( dict, s, n + 1 ) ) )
+            {
+                
+                DEBUG( "    - Symbol not found: adding new entry: 0x%03X - %03u (%s)", dict->count, dict->count, s );
+                DEBUG( "    - Writing previous symbol code to the buffer: 0x%03X - %03u", prev_code->code, prev_code->code );
+                
+                if( j == LZWM_WRITE_BUFFER_LENGTH )
+                {
+                    lzwm_compress_write( dict, write_buffer, j, bytes, destination );
+                    memset( write_buffer, 0, LZWM_WRITE_BUFFER_LENGTH );
+                    
+                    j     = 0;
+                    bytes = 0;
+                }
+                
+                write_buffer[ j++ ] = prev_code->code;
+                
+                if( lzwm_add_dict_entry( dict, s, n + 1 ) == NULL )
+                {
+                    if( j == LZWM_WRITE_BUFFER_LENGTH )
+                    {
+                        lzwm_compress_write( dict, write_buffer, j, bytes, destination );
+                        memset( write_buffer, 0, LZWM_WRITE_BUFFER_LENGTH );
+                        
+                        j     = 0;
+                        bytes = 0;
+                    }
+                    
+                    DEBUG( "Maximum number of codes reached. Creating a new LZWM dictionary" );
+                    lzwm_delete_dict( dict );
+                    
+                    if( NULL == ( dict = lzwm_create_dict() ) )
+                    {
+                        return LZWM_ERROR_MALLOC;
+                    }
+                    
+                    lzwm_add_dict_entry( dict, s, n + 1 );
+                    
+                    DEBUG( "Writing dictionary end marker" );
+                    
+                    write_buffer[ j++ ] = LZWM_DICT_MARKER_END;
+                }
+                
+                memset( s, 0, LZWM_DATA_MAX_LENGTH );
+                
+                s[ 0 ]    = c;
+                n         = 1;
+                prev_code = &( dict->codes[ c ] );
+            }
+            else
+            {
+                DEBUG( "    - Symbol found:     0x%03X - %03u (%s)", code->code, code->code, code->data );
+                
+                prev_code = code;
+                
+                n++;
+            }
+        }
+        
+        p = ( ( double )read_op / ( double )read_ops ) * 100;
+    }
+    
+    if( j == LZWM_WRITE_BUFFER_LENGTH )
+    {
+        lzwm_compress_write( dict, write_buffer, j, bytes, destination );
+        memset( write_buffer, 0, LZWM_WRITE_BUFFER_LENGTH );
+        
+        j     = 0;
+        bytes = 0;
+    }
+    
+    write_buffer[ j++ ] = prev_code->code;
+    lzwm_compress_write( dict, write_buffer, j, bytes, destination );
+    
+    p = 100;
+    
+    libprogressbar_end();
+    
+    DEBUG( "Deleting the LZWM dictionary" );
+    lzwm_delete_dict( dict );
     
     return LZWM_OK;
 }
@@ -53,11 +205,61 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
  */
 lzwm_status lzwm_compress_write( lzwm_dict * dict, uint16_t * buffer, size_t length, size_t bytes, FILE * destination )
 {
-    ( void )dict;
-    ( void )buffer;
-    ( void )length;
-    ( void )bytes;
-    ( void )destination;
+    unsigned int i;
+    unsigned int j;
+    unsigned int n;
+    uint8_t    * char_buffer;
+    lzwm_code  * code;
+    uint16_t     shrt;
+    uint16_t     marker_8bits;
+    uint16_t     marker_16bits;
+    
+    marker_8bits  = LZWM_DICT_MARKER_8BITS;
+    marker_16bits = LZWM_DICT_MARKER_16BITS;
+    i             = 0;
+    j             = 0;
+    n             = 0;
+    
+    DEBUG( "Writing data to the destination file" )
+    DEBUG( "Checking compression ratio" );
+    
+    if( bytes > length * 2 )
+    {
+        DEBUG( "%u bytes saved: writing 16 bits codes", bytes - ( length * 2 ) );
+        fwrite( &marker_16bits, sizeof( uint16_t ), 1, destination );
+        fwrite( buffer, sizeof( uint16_t ), length, destination );
+    }
+    else
+    {
+        DEBUG( "No byte saved: writing 8 bits data" );
+        
+        if( NULL == ( char_buffer = ( ( uint8_t * )malloc( sizeof( uint8_t ) * bytes ) ) ) )
+        {
+            ERROR( "Out of memory" );
+        }
+        
+        for( i = 0; i < length; i++ )
+        {
+            shrt = buffer[ i ];
+            
+            if( shrt == LZWM_DICT_MARKER_END )
+            {
+                continue;
+            }
+            
+            code = &( dict->codes[ shrt ] );
+            
+            for( j = 0; j < code->length; j++ )
+            {
+                char_buffer[ n++ ] = code->data[ j ];
+            }
+        }
+        
+        fwrite( &marker_8bits, sizeof( uint16_t ), 1, destination );
+        fwrite( &bytes, sizeof( size_t ), 1, destination );
+        fwrite( char_buffer, sizeof( uint8_t ), bytes, destination );
+        free( char_buffer );
+    }
     
     return LZWM_OK;
 }
