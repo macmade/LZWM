@@ -61,8 +61,8 @@ extern "C" {
     lzwm_code * lzwm_add_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length );
     
     /*!
-    * 
-    */
+     * 
+     */
     lzwm_code * lzwm_find_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length );
     
 #ifdef __cplusplus
