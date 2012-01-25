@@ -72,7 +72,7 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
     code      = NULL;
     prev_code = NULL;
     size      = fsize( source );
-    read_ops  = ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
+    read_ops  = ( unsigned long )ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
     
     memset( s,           0, LZWM_DATA_MAX_LENGTH );
     memset( read_buffer, 0, LZWM_READ_BUFFER_LENGTH );
@@ -175,7 +175,7 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
             }
         }
         
-        p = ( ( double )read_op / ( double )read_ops ) * 100;
+        p = ( unsigned int )( ( ( double )read_op / ( double )read_ops ) * 100 );
     }
     
     if( j == LZWM_WRITE_BUFFER_LENGTH )

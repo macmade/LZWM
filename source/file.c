@@ -42,7 +42,7 @@
  */
 bool lzwm_get_destination_filename( char * source, char * filename, bool compress )
 {
-    int    i;
+    size_t i;
     size_t length;
     size_t length_ext;
     char * basename;
@@ -54,13 +54,13 @@ bool lzwm_get_destination_filename( char * source, char * filename, bool compres
     length_ext = strlen( LZWM_FILE_EXT );
     
     /* Process the string from the end */
-    for( i = length - 1; i > -1; i-- )
+    for( i = length; i > 0; i-- )
     {
         /* Checks for a slash */
-        if( basename[ i ] == '/' )
+        if( basename[ i - 1 ] == '/' )
         {
             /* Moves the pointer to the file name */
-            basename += i + 1;
+            basename += i;
             break;
         }
     }
@@ -103,7 +103,7 @@ bool lzwm_get_destination_filename( char * source, char * filename, bool compres
         }
         
         /* Suffix to add */
-        sprintf( suffix, "-%i", ++i );
+        sprintf( suffix, "-%lu", ++i );
         
         /* Checks if we must add the extension */
         if( add_ext == false )

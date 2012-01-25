@@ -59,4 +59,3 @@ lzwm_status lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destinati
     
     return LZWM_OK;
 }
-    

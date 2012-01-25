@@ -42,8 +42,8 @@
  */
 lzwm_dict * lzwm_create_dict( void )
 {
-    unsigned int i;
-    lzwm_dict  * dict;
+    unsigned int  i;
+    lzwm_dict   * dict;
     
     if( NULL == ( dict = ( lzwm_dict * )malloc( sizeof( lzwm_dict ) ) ) )
     {
@@ -62,8 +62,8 @@ lzwm_dict * lzwm_create_dict( void )
     
     for( i = 0; i < 256; i++ )
     {
-        dict->codes[ i ].code      = i;
-        dict->codes[ i ].data[ 0 ] = i;
+        dict->codes[ i ].code      = ( uint16_t )i;
+        dict->codes[ i ].data[ 0 ] = ( unsigned char )i;
         dict->codes[ i ].length    = 1;
     }
     
@@ -75,9 +75,9 @@ lzwm_dict * lzwm_create_dict( void )
  */
 lzwm_code * lzwm_add_dict_entry( lzwm_dict * dict, unsigned char * data, unsigned int length )
 {
-    lzwm_code   * code;
-    lzwm_code   * new_code;
-    unsigned long i;
+    lzwm_code  * code;
+    lzwm_code  * new_code;
+    unsigned int i;
     
     code     = &( dict->codes[ data[ 0 ] ] );
     new_code = NULL;
@@ -98,7 +98,7 @@ lzwm_code * lzwm_add_dict_entry( lzwm_dict * dict, unsigned char * data, unsigne
         {
             new_code                    = &( dict->codes[ dict->count ] );
             new_code->length            = i + 1;
-            new_code->code              = dict->count;
+            new_code->code              = ( uint16_t )dict->count;
             code->children[ data[ i ] ] = new_code;
             
             memcpy( new_code->data, data, i + 1 );

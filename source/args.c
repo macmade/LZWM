@@ -44,6 +44,8 @@ void lzwm_get_cli_args( int argc, char ** argv, lzwm_cli_args * args )
 {
     int i = 0;
     
+    memset( args, 0, sizeof( lzwm_cli_args ) );
+    
     while( ++i < argc && ( ( char * )*( ++argv ) )[ 0 ] == '-' )
     {
         switch( ( ( char * )*( argv ) )[ 1 ] )

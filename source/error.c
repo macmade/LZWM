@@ -40,7 +40,7 @@
 /*!
  * 
  */
-char * lzwm_err_str( lzwm_status status )
+const char * lzwm_err_str( lzwm_status status )
 {
     switch( status )
     {

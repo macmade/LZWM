@@ -59,6 +59,8 @@
 		0512043C12E1FE2000F07A22 /* test-3.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "test-3.txt"; sourceTree = "<group>"; };
 		0530163B12E22EF000D578CA /* file.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = file.c; sourceTree = "<group>"; };
 		0530163C12E22F0300D578CA /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file.h; sourceTree = "<group>"; };
+		055D054E14D087D5009F7DF5 /* error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = error.c; path = source/error.c; sourceTree = SOURCE_ROOT; };
+		055D055014D087F4009F7DF5 /* error.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -103,6 +105,7 @@
 				0512042E12E1BBB700F07A22 /* compress.c */,
 				0512042612E1AFEC00F07A22 /* dict.c */,
 				0512043012E1BBBF00F07A22 /* expand.c */,
+				055D054E14D087D5009F7DF5 /* error.c */,
 				0530163B12E22EF000D578CA /* file.c */,
 				0512040112E1A80900F07A22 /* help.c */,
 				0512040012E1A73D00F07A22 /* lzwm.c */,
@@ -120,6 +123,7 @@
 				0512040512E1A94B00F07A22 /* constants.h */,
 				0512042712E1B08C00F07A22 /* dict.h */,
 				0512043212E1BBD100F07A22 /* expand.h */,
+				055D055014D087F4009F7DF5 /* error.h */,
 				0530163C12E22F0300D578CA /* file.h */,
 				0512040312E1A82300F07A22 /* help.h */,
 				051203FF12E1A73700F07A22 /* lzwm.h */,
