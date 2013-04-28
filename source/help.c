@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina - www.xs-labs.com
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -31,7 +31,7 @@
 
 /*!
  * @file        help.c
- * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
+ * @copyright   (c) 2011 - Jean-David Gadina - www.xs-labs.com
  * @abstract    ...
  */
 
@@ -46,7 +46,7 @@ void lzwm_help( char * exec )
     (
         "\n"
         "LZW compression utility - %s\n"
-        "Copyright (c) 2011 eosgarden - Jean-David Gadina <macmade@eosgarden.com>\n"
+        "Copyright (c) 2011 - Jean-David Gadina - www.xs-labs.com\n"
         "\n"
         "Usage: %s [OPTIONS] SOURCE DESTINATION\n"
         "\n"

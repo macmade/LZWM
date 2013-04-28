@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina - www.xs-labs.com
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -31,7 +31,7 @@
 
 /*!
  * @header      types.h
- * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
+ * @copyright   (c) 2011 - Jean-David Gadina - www.xs-labs.com
  * @abstract    Program's type definitions
  */
 
@@ -54,7 +54,8 @@ extern "C" {
         LZWM_ERROR_INVALID_FILE = 0x01,
         LZWM_ERROR_MALLOC       = 0x02,
         LZWM_ERROR_FOPEN        = 0x03,
-        LZWM_ERROR_FILE_ID      = 0x04
+        LZWM_ERROR_FILE_ID      = 0x04,
+        LZWM_ERROR_WRITE        = 0x05
     }
     lzwm_status;
     

@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina - www.xs-labs.com
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -27,11 +27,11 @@
  * DEALINGS IN THE SOFTWARE.
  ******************************************************************************/
  
-/* $Id: compress.c 18 2011-01-22 19:21:25Z macmade@eosgarden.com $ */
+/* $Id$ */
 
 /*!
  * @header      compress.c
- * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
+ * @copyright   (c) 2011 - Jean-David Gadina - www.xs-labs.com
  * @abstract    ...
  */
 
@@ -48,6 +48,7 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
     unsigned int        p;
     unsigned long       read_ops;
     unsigned long       read_op;
+    float               tmp;
     size_t              size;
     size_t              length;
     size_t              bytes;
@@ -72,11 +73,12 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
     code      = NULL;
     prev_code = NULL;
     size      = fsize( source );
-    read_ops  = ( unsigned long )ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
+    tmp       = ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
+    read_ops  = ( unsigned long )tmp;
     
     memset( s,           0, LZWM_DATA_MAX_LENGTH );
     memset( read_buffer, 0, LZWM_READ_BUFFER_LENGTH );
-    
+     
     if( fread( &s, sizeof( uint8_t ), 1, source ) == 0 )
     {
         return LZWM_ERROR_INVALID_FILE;

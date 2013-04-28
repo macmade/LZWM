@@ -1,5 +1,5 @@
 /*******************************************************************************
- * Copyright (c) 2011, Jean-David Gadina <macmade@eosgarden.com>
+ * Copyright (c) 2011, Jean-David Gadina - www.xs-labs.com
  * Distributed under the Boost Software License, Version 1.0.
  * 
  * Boost Software License - Version 1.0 - August 17th, 2003
@@ -31,7 +31,7 @@
 
 /*!
  * @header      expand.c
- * @copyright   eosgarden 2011 - Jean-David Gadina <macmade@eosgarden.com>
+ * @copyright   (c) 2011 - Jean-David Gadina - www.xs-labs.com
  * @abstract    ...
  */
 
@@ -42,8 +42,239 @@
  */
 lzwm_status lzwm_expand( FILE * source, FILE * destination )
 {
-    ( void )source;
-    ( void )destination;
+    char                unit[ 4 ];
+    float               tmp;
+    unsigned char       read_buffer_char[ LZWM_READ_BUFFER_LENGTH ];
+    uint16_t            read_buffer_shrt[ LZWM_READ_BUFFER_LENGTH ];
+    uint8_t             write_buffer[ LZWM_WRITE_BUFFER_LENGTH ];
+    uint8_t             data[ LZWM_DATA_MAX_LENGTH ];
+    unsigned char       c;
+    unsigned int        i;
+    unsigned int        j;
+    unsigned int        n;
+    unsigned int        p;
+    unsigned long       read_ops;
+    unsigned long       read_op;
+    double              hsize;
+    size_t              length;
+    size_t              size;
+    size_t              bytes;
+    size_t              data_length;
+    uint16_t            code_length;
+    uint16_t            o_code;
+    uint16_t            n_code;
+    char                id[ 5 ]        = { 0, 0, 0, 0, 0 };
+    lzwm_dict         * dict;
+    libprogressbar_args args;
+    
+    DEBUG( "Verifying the file signature" );
+    
+    if( fread( id, sizeof( uint8_t ), 4, source ) != 4 || strcmp( id, LZWM_FILE_ID ) != 0 )
+    {
+        printf( "Error: source file is not a valid LZWM file\n" );
+        
+        return LZWM_ERROR_INVALID_FILE;
+    }
+    
+    if
+    (
+           fread( &code_length, sizeof( uint16_t ), 1, source ) != 1
+        || ( code_length != LZWM_DICT_MARKER_8BITS && code_length != LZWM_DICT_MARKER_16BITS )
+    )
+    {
+        printf( "Error: source file is not a valid LZWM file\n" );
+        
+        return LZWM_ERROR_INVALID_FILE;
+    }
+    
+    size     = fsize( source );
+    hsize    = fhsize( source, unit );
+    tmp      = ceil( ( double )size / ( double )LZWM_READ_BUFFER_LENGTH );
+    read_ops = ( unsigned long )tmp;
+    read_op  = 0;
+    c        = 0;
+    i        = 0;
+    j        = 0;
+    n        = 0;
+    p        = 0;
+    o_code   = 0;
+    n_code   = 0;
+    
+    memset( write_buffer, 0, LZWM_WRITE_BUFFER_LENGTH );
+    
+    if( libdebug_is_enabled() == false )
+    {
+        args.percent = &p;
+        args.length  = 50;
+        args.label   = "Expanding file:";
+        args.done    = "[OK]";
+        
+        libprogressbar_create_progressbar( ( void * )( &args ) );
+    }
+    
+    DEBUG( "Initializing the LZW dictionnary" );
+    
+    if( NULL == ( dict = lzwm_create_dict() ) )
+    {
+        printf( "Error: cannot initialize the LZW dictionnary.\n" );
+        
+        return LZWM_ERROR_MALLOC;
+    }
+    
+    DEBUG( "Code length: %u bits", ( code_length == LZWM_DICT_MARKER_8BITS ) ? 8 : 16 );
+    
+    while( 1 )
+    {
+        
+        DEBUG( "Reading data from source file" );
+        
+        if( code_length == LZWM_DICT_MARKER_8BITS )
+        {
+            fread( &bytes, sizeof( size_t ), 1, source );
+            
+            if( bytes > 0 )
+            {
+                DEBUG( "%lu bytes to read", bytes );
+            }
+            else
+            {
+                printf( "Error: source file is not a valid LZWM file\n" );
+                
+                return LZWM_ERROR_INVALID_FILE;
+            }
+            
+            length = fread( read_buffer_char, sizeof( uint8_t ), LZWM_READ_BUFFER_LENGTH, source );
+            
+            for( i = 0; i < length; i++ )
+            {
+                if( bytes == 0 )
+                {
+                    break;
+                }
+                
+                if( n == LZWM_WRITE_BUFFER_LENGTH )
+                {
+                    lzwm_expand_write( write_buffer, n, destination );
+                    
+                    n = 0;
+                }
+                
+                DEBUG( "    - Writing data to the buffer: 0x%03X - %03u (%c)", read_buffer_char[ i ], read_buffer_char[ i ], ( isprint( read_buffer_char[ i ] ) ) ? read_buffer_char[ i ] : '.' );
+                write_buffer[ n++ ] = read_buffer_char[ i ];
+                
+                bytes--;
+            }
+        }
+        else
+        {
+            length = fread( read_buffer_shrt, sizeof( uint16_t ), LZWM_READ_BUFFER_LENGTH, source );
+            
+            o_code = read_buffer_shrt[ 0 ];
+            
+            DEBUG( "First code:                       0x%03X - %03u (%c)", o_code, o_code, ( isprint( o_code ) ) ? o_code : '.' );
+            
+                
+            if( n == LZWM_WRITE_BUFFER_LENGTH )
+            {
+                lzwm_expand_write( write_buffer, n, destination );
+                
+                n = 0;
+            }
+            
+            write_buffer[ n++ ] = ( uint8_t )o_code;
+            
+            for( i = 1; i < length; i++ )
+            {
+                n_code = read_buffer_shrt[ i ];
+                
+                if( n_code == LZWM_DICT_MARKER_END )
+                {
+                    DEBUG( "End of dictionary marker found. Creating a new LZW dictionary.\n" );
+                    
+                    lzwm_delete_dict( dict );
+                    
+                    if( NULL == ( dict = lzwm_create_dict() ) )
+                    {
+                        printf( "Error: cannot initialize the LZW dictionnary.\n" );
+                        
+                        return LZWM_ERROR_MALLOC;
+                    }
+                    
+                    break;
+                }
+                
+                DEBUG( "    - Searching code: 0x%03X - %03u", n_code, n_code );
+                
+                if( dict->codes[ n_code ].length > 0 )
+                {
+                    DEBUG( "    - Found code:     0x%03X - %03u (%s)", n_code, n_code, dict->codes[ n_code ].data );
+                    memset( data, 0, LZWM_DATA_MAX_LENGTH );
+                    memcpy( data, dict->codes[ n_code ].data, dict->codes[ n_code ].length );
+                    
+                    data_length = dict->codes[ n_code ].length;
+                }
+                else
+                {
+                    DEBUG( "    - Code not found: 0x%03X - %03u", n_code, n_code );
+                    memset( data, 0, LZWM_DATA_MAX_LENGTH );
+                    memcpy( data, dict->codes[ o_code ].data, dict->codes[ o_code ].length );
+                    
+                    data[ dict->codes[ o_code ].length ] = c;
+                    data_length                          = dict->codes[ o_code ].length + 1;
+                }
+                
+                DEBUG( "Writing data in the buffer: %s", data );
+                DEBUG( "%u / %u", n, LZWM_WRITE_BUFFER_LENGTH );
+                for( j = 0; j < data_length; j++ )
+                {
+                    if( n == LZWM_WRITE_BUFFER_LENGTH )
+                    {
+                        lzwm_expand_write( write_buffer, n, destination );
+                        
+                        n = 0;
+                    }
+                    
+                    write_buffer[ n++ ] = data[ j ];
+                }
+                
+                c = data[ 0 ];
+                
+                memset( data, 0, LZWM_DATA_MAX_LENGTH );
+                memcpy( data, dict->codes[ o_code ].data, dict->codes[ o_code ].length );
+                
+                data[ dict->codes[ o_code ].length ] = c;
+                
+                DEBUG( "    - Adding entry:   0x%03X - %03u (%s)", dict->count, dict->count, data );
+                lzwm_add_dict_entry( dict, data, dict->codes[ o_code ].length + 1 );
+                
+                o_code = n_code;
+            }
+        }
+        
+        length = fread( &code_length, sizeof( uint16_t ), 1, source );
+        
+        if( length == 0 )
+        {
+            break;
+        }
+        else
+        {
+            DEBUG( "Code length: %u bits", ( code_length == LZWM_DICT_MARKER_8BITS ) ? 8 : 16 );
+        }
+        
+        read_op++;
+        
+        p = ( unsigned int )( ( ( double )read_op / ( double )read_ops ) * 100 );
+    }
+    
+    if( n > 0 )
+    {
+        lzwm_expand_write( write_buffer, n, destination );
+    }
+    
+    p = 100;
+    
+    libprogressbar_end();
     
     return LZWM_OK;
 }
@@ -53,9 +284,15 @@ lzwm_status lzwm_expand( FILE * source, FILE * destination )
  */
 lzwm_status lzwm_expand_write( uint8_t * buffer, size_t length, FILE * destination )
 {
-    ( void )buffer;
-    ( void )length;
-    ( void )destination;
+    DEBUG( "Writing data to the destination file" );
+    
+    if( fwrite( buffer, sizeof( uint8_t ), length, destination ) != length )
+    {
+        DEBUG( "Error writing data to the destination file" );
+        return LZWM_ERROR_WRITE;
+    }
+    
+    memset( buffer, 0, LZWM_WRITE_BUFFER_LENGTH );
     
     return LZWM_OK;
 }
