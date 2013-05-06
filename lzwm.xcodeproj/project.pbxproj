@@ -243,7 +243,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = eosgarden;
+				ORGANIZATIONNAME = XS-Labs;
 			};
 			buildConfigurationList = 051203DD12E1A44D00F07A22 /* Build configuration list for PBXProject "lzwm" */;
 			compatibilityVersion = "Xcode 3.2";
