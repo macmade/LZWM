@@ -91,6 +91,9 @@ lzwm_status lzwm_compress( FILE * source, FILE * destination )
         return LZWM_ERROR_MALLOC;
     }
     
+    DEBUG( "Writing the file signature" );
+    fwrite( LZWM_FILE_ID, 1, 4, destination );
+    
     if( libdebug_is_enabled() == false )
     {
         args.percent = &p;
