@@ -1,9 +1,9 @@
 [submodule "deps/STDC"]
 	path = deps/STDC
-	url = git@github.com:macmade/STDC.git
+	url = git://github.com/macmade/STDC.git
 [submodule "deps/EOS-SKL"]
 	path = deps/EOS-SKL
-	url = git@github.com:macmade/EOS-SKL.git
+	url = git://github.com/macmade/EOS-SKL.git
 [submodule "deps/CLibs"]
 	path = deps/CLibs
-	url = git@github.com:macmade/CLibs.git
+	url = git://github.com/macmade/CLibs.git
