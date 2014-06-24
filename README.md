@@ -1,7 +1,7 @@
 LZWM
 ====
 
-[![Build Status](https://travis-ci.org/macmade/LZWM-Old.svg?branch=master)](https://travis-ci.org/macmade/LZWM-Old)
+[![Build Status](https://img.shields.io/travis/macmade/LZWM-Old.svg?branch=master&style=flat)](https://travis-ci.org/macmade/LZWM-Old)
 
 About
 -----
