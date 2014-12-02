@@ -2,6 +2,10 @@ LZWM
 ====
 
 [![Build Status](https://img.shields.io/travis/macmade/LZWM-Old.svg?branch=master&style=flat)](https://travis-ci.org/macmade/LZWM-Old)
+[![Issues](http://img.shields.io/github/issues/macmade/LZWM-Old.svg?style=flat)](https://github.com/macmade/LZWM-Old/issues)
+![Status](https://img.shields.io/badge/status-inactive-lightgray.svg?style=flat)
+![License](https://img.shields.io/badge/license-boost-brightgreen.svg?style=flat)
+[![Contact](https://img.shields.io/badge/contact-@macmade-blue.svg?style=flat)](https://twitter.com/macmade)
 
 About
 -----
